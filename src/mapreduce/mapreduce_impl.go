@@ -1,9 +1,13 @@
 package mapreduce
 
+import "sync"
+
 //
 // any additional state that you want to add to type MapReduce
 //
 type MapReduceImpl struct {
+	WorkDoneChannel chan bool
+	mux             sync.Mutex
 }
 
 //
@@ -11,4 +15,5 @@ type MapReduceImpl struct {
 //
 func (mr *MapReduce) InitMapReduceImpl(nmap int, nreduce int,
 	file string, master string) {
+	mr.impl.WorkDoneChannel = make(chan bool)
 }
